@@ -1,0 +1,41 @@
+---
+import {BASE_URL} from "../consts";
+export interface Props {
+    currentPage: number;
+    totalPages: number;
+    prevUrl: string;
+    nextUrl: string;
+}
+
+const {currentPage, totalPages, prevUrl, nextUrl} = Astro.props;
+
+
+const displayStyle = totalPages > 1 ? 'inline-block' : 'none';
+---
+
+
+<div style="width: 100%; text-align: center; ">
+
+            <nav class="pagination-wrapper" aria-label="Pagination" style={`display: ${displayStyle}; margin: 20px 0;`}>
+                <ul style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 10px;">
+                    {currentPage > 1 && (
+                            <li>
+                                <a href={`${BASE_URL}${prevUrl}`} style="display: block; padding: 8px 12px; background-color: #f0f0f0; color: #333; text-decoration: none; border-radius: 5px;">
+                                    Prev
+                                </a>
+                            </li>
+                    )}
+                    <li style="padding: 8px 12px; color: #333;">
+                        {currentPage} / {totalPages}
+                    </li>
+                    {currentPage < totalPages && (
+                            <li>
+                                <a href={`${BASE_URL}${nextUrl}`} style="display: block; padding: 8px 12px; background-color: #f0f0f0; color: #333; text-decoration: none; border-radius: 5px;">
+                                    Next
+                                </a>
+                            </li>
+                    )}
+                </ul>
+            </nav>
+
+        </div>

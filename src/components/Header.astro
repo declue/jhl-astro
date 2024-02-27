@@ -1,0 +1,163 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import {BASE_URL, SITE_TITLE, GITHUB_LINK} from '../consts';
+
+const IS_DEV = import.meta.env.VITE_IS_DEV === 'TRUE';
+---
+<script>
+
+    // 테마를 초기화하고 이전에 저장된 테마가 있다면 적용하는 함수
+    function initializeTheme() {
+        var html = document.documentElement;
+        var lightModeIcon = document.getElementById('lightModeIcon');
+        var darkModeIcon = document.getElementById('darkModeIcon');
+        if (lightModeIcon == null || darkModeIcon == null) {
+            return;
+        }
+        var savedTheme = localStorage.getItem('data-theme'); // localStorage에서 theme 값을 가져옵니다.
+
+        // 저장된 테마가 있다면, HTML의 theme 속성을 업데이트하고 아이콘을 적절히 토글합니다.
+        if (savedTheme) {
+            html.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                darkModeIcon.style.display = 'block';
+                lightModeIcon.style.display = 'none';
+            } else {
+                darkModeIcon.style.display = 'none';
+                lightModeIcon.style.display = 'block';
+            }
+        }
+    }
+
+    document.getElementById('modeToggle')?.addEventListener('click', function () {
+        var html = document.documentElement;
+        var lightModeIcon = document.getElementById('lightModeIcon');
+        var darkModeIcon = document.getElementById('darkModeIcon');
+
+        if (lightModeIcon == null || darkModeIcon == null) {
+            return;
+        }
+
+        if (html.getAttribute('data-theme') === 'light') {
+            html.setAttribute('data-theme', 'dark');
+            localStorage.setItem('data-theme', 'dark'); // 선택된 테마를 localStorage에 저장합니다.
+            darkModeIcon.style.display = 'block';
+            lightModeIcon.style.display = 'none';
+        } else {
+            html.setAttribute('data-theme', 'light');
+            localStorage.setItem('data-theme', 'light'); // 선택된 테마를 localStorage에 저장합니다.
+            darkModeIcon.style.display = 'none';
+            lightModeIcon.style.display = 'block';
+        }
+    });
+
+    // 페이지 로드 시 테마 초기화 함수 호출
+    initializeTheme();
+
+
+</script>
+<header>
+    <nav>
+        <h2 class="blog-title"><a href={BASE_URL + "/"}>{SITE_TITLE}</a></h2>
+        <div class="internal-links" style="width: var(--width)">
+            <div style="text-align: center;">
+                <HeaderLink href={BASE_URL + "/blog"}>Blog</HeaderLink>
+                <HeaderLink href={BASE_URL + "/series"}>Series</HeaderLink>
+                <HeaderLink href={BASE_URL + "/search"}>Search</HeaderLink>
+                <HeaderLink href={BASE_URL + "/about"}>About</HeaderLink>
+                {IS_DEV &&
+                        <HeaderLink href={BASE_URL + "/admin"} style="float:right;">
+                            <svg fill="var(--default-font-color)" width="18px" height="18px" viewBox="0 0 36 36"
+                                 preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier"><title>administrator-solid</title>
+                                    <circle cx="14.67" cy="8.3" r="6" class="clr-i-solid clr-i-solid-path-1"></circle>
+                                    <path d="M16.44,31.82a2.15,2.15,0,0,1-.38-2.55l.53-1-1.09-.33A2.14,2.14,0,0,1,14,25.84V23.79a2.16,2.16,0,0,1,1.53-2.07l1.09-.33-.52-1a2.17,2.17,0,0,1,.35-2.52,18.92,18.92,0,0,0-2.32-.16A15.58,15.58,0,0,0,2,23.07v7.75a1,1,0,0,0,1,1H16.44Z"
+                                          class="clr-i-solid clr-i-solid-path-2"></path>
+                                    <path d="M33.7,23.46l-2-.6a6.73,6.73,0,0,0-.58-1.42l1-1.86a.35.35,0,0,0-.07-.43l-1.45-1.46a.38.38,0,0,0-.43-.07l-1.85,1a7.74,7.74,0,0,0-1.43-.6l-.61-2a.38.38,0,0,0-.36-.25H23.84a.38.38,0,0,0-.35.26l-.6,2a6.85,6.85,0,0,0-1.45.61l-1.81-1a.38.38,0,0,0-.44.06l-1.47,1.44a.37.37,0,0,0-.07.44l1,1.82A7.24,7.24,0,0,0,18,22.83l-2,.61a.36.36,0,0,0-.26.35v2.05a.36.36,0,0,0,.26.35l2,.61a7.29,7.29,0,0,0,.6,1.41l-1,1.9a.37.37,0,0,0,.07.44L19.16,32a.38.38,0,0,0,.44.06l1.87-1a7.09,7.09,0,0,0,1.4.57l.6,2.05a.38.38,0,0,0,.36.26h2.05a.38.38,0,0,0,.35-.26l.6-2.05a6.68,6.68,0,0,0,1.38-.57l1.89,1a.38.38,0,0,0,.44-.06L32,30.55a.38.38,0,0,0,.06-.44l-1-1.88a6.92,6.92,0,0,0,.57-1.38l2-.61a.39.39,0,0,0,.27-.35V23.82A.4.4,0,0,0,33.7,23.46Zm-8.83,4.72a3.34,3.34,0,1,1,3.33-3.34A3.34,3.34,0,0,1,24.87,28.18Z"
+                                          class="clr-i-solid clr-i-solid-path-3"></path>
+                                    <rect x="0" y="0" width="36" height="36" fill-opacity="0"></rect>
+                                </g>
+                            </svg>
+                            ADMIN
+                        </HeaderLink>
+                        <HeaderLink href={BASE_URL + "/new"} style="float:right;">
+                            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
+                                 fill="var(--default-font-color)" width="18px" height="18px">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier"><title>new</title>
+                                    <defs></defs>
+                                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <g id="Icon-Set"
+                                           transform="translate(-516.000000, -99.000000)" fill="var(--default-font-color)">
+                                            <path d="M527.786,122.02 L522.414,125.273 C521.925,125.501 521.485,125.029 521.713,124.571 L524.965,119.195 L527.786,122.02 L527.786,122.02 Z M537.239,106.222 L540.776,109.712 L529.536,120.959 C528.22,119.641 526.397,117.817 526.024,117.444 L537.239,106.222 L537.239,106.222 Z M540.776,102.683 C541.164,102.294 541.793,102.294 542.182,102.683 L544.289,104.791 C544.677,105.18 544.677,105.809 544.289,106.197 L542.182,108.306 L538.719,104.74 L540.776,102.683 L540.776,102.683 Z M524.11,117.068 L519.81,125.773 C519.449,126.754 520.233,127.632 521.213,127.177 L529.912,122.874 C530.287,122.801 530.651,122.655 530.941,122.365 L546.396,106.899 C547.172,106.124 547.172,104.864 546.396,104.088 L542.884,100.573 C542.107,99.797 540.85,99.797 540.074,100.573 L524.619,116.038 C524.328,116.329 524.184,116.693 524.11,117.068 L524.11,117.068 Z M546,111 L546,127 C546,128.099 544.914,129.012 543.817,129.012 L519.974,129.012 C518.877,129.012 517.987,128.122 517.987,127.023 L517.987,103.165 C517.987,102.066 518.902,101 520,101 L536,101 L536,99 L520,99 C517.806,99 516,100.969 516,103.165 L516,127.023 C516,129.22 517.779,131 519.974,131 L543.817,131 C546.012,131 548,129.196 548,127 L548,111 L546,111 L546,111 Z"
+                                                  id="new"></path>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                            NEW
+
+                        </HeaderLink>
+
+                }
+            </div>
+
+        </div>
+        <div class="Icons">
+            <div class="social-links">
+                <a href={GITHUB_LINK} target="_blank">
+                    <span class="sr-only">Go to GitHub repo</span>
+                    <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
+                    >
+                        <path
+                                fill="currentColor"
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+                        ></path>
+                    </svg
+                    >
+                </a>
+            </div>
+
+            <a href={BASE_URL + "/rss.xml"} target="_blank">
+                <span class="sr-only">Go to rss.xml</span>
+                <svg fill="#000000" height="33px" width="33px" id="Layer_1"
+                     viewBox="0 0 504.4 504.4" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                            <g>
+                                <g>
+                                  <path fill="currentColor"
+                                        d="M377.6,0.2H126.4C56.8,0.2,0,57,0,126.6v251.6c0,69.2,56.8,126,126.4,126H378c69.6,0,126.4-56.8,126.4-126.4V126.6 C504,57,447.2,0.2,377.6,0.2z M136.8,409c-23.2,0-42-18.8-42-41.6c0-23.2,18.8-41.6,42-41.6c23.2,0,42,18.8,42,41.6 C178.8,390.2,160,409,136.8,409z M242,408.2c0-40-14.8-76-42.4-103.6c-28-28-63.6-42.4-103.6-42.4v-60.4 c112,0,206.4,94.4,206.4,206.4H242z M348.8,408.2c0-140-112.8-252.8-252.8-252.8V95c172,0,313.2,141.2,313.2,313.2H348.8z"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+            </a>
+            <a href="" id="modeToggle">
+                <svg fill="#000000" width="28px" height="33px" viewBox="0 0 35 35" data-name="Layer 2"
+                     id="lightModeIcon"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path fill="currentColor"
+                              d="M18.44,34.68a18.22,18.22,0,0,1-2.94-.24,18.18,18.18,0,0,1-15-20.86A18.06,18.06,0,0,1,9.59.63,2.42,2.42,0,0,1,12.2.79a2.39,2.39,0,0,1,1,2.41L11.9,3.1l1.23.22A15.66,15.66,0,0,0,23.34,21h0a15.82,15.82,0,0,0,8.47.53A2.44,2.44,0,0,1,34.47,25,18.18,18.18,0,0,1,18.44,34.68ZM10.67,2.89a15.67,15.67,0,0,0-5,22.77A15.66,15.66,0,0,0,32.18,24a18.49,18.49,0,0,1-9.65-.64A18.18,18.18,0,0,1,10.67,2.89Z"></path>
+                    </g>
+                </svg>
+                <svg width="32px" height="32px" id="darkModeIcon" viewBox="0 0 24 24" fill="none"
+                     xmlns="http://www.w3.org/2000/svg" style={{display: "none"}}>
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path fill="currentColor" clip-rule="evenodd"
+                              d="M12 1.25C12.4142 1.25 12.75 1.58579 12.75 2V4C12.75 4.41421 12.4142 4.75 12 4.75C11.5858 4.75 11.25 4.41421 11.25 4V2C11.25 1.58579 11.5858 1.25 12 1.25ZM3.66865 3.71609C3.94815 3.41039 4.42255 3.38915 4.72825 3.66865L6.95026 5.70024C7.25596 5.97974 7.2772 6.45413 6.9977 6.75983C6.7182 7.06553 6.2438 7.08677 5.9381 6.80727L3.71609 4.77569C3.41039 4.49619 3.38915 4.02179 3.66865 3.71609ZM20.3314 3.71609C20.6109 4.02179 20.5896 4.49619 20.2839 4.77569L18.0619 6.80727C17.7562 7.08677 17.2818 7.06553 17.0023 6.75983C16.7228 6.45413 16.744 5.97974 17.0497 5.70024L19.2718 3.66865C19.5775 3.38915 20.0518 3.41039 20.3314 3.71609ZM12 7.75C9.65279 7.75 7.75 9.65279 7.75 12C7.75 14.3472 9.65279 16.25 12 16.25C14.3472 16.25 16.25 14.3472 16.25 12C16.25 9.65279 14.3472 7.75 12 7.75ZM6.25 12C6.25 8.82436 8.82436 6.25 12 6.25C15.1756 6.25 17.75 8.82436 17.75 12C17.75 15.1756 15.1756 17.75 12 17.75C8.82436 17.75 6.25 15.1756 6.25 12ZM1.25 12C1.25 11.5858 1.58579 11.25 2 11.25H4C4.41421 11.25 4.75 11.5858 4.75 12C4.75 12.4142 4.41421 12.75 4 12.75H2C1.58579 12.75 1.25 12.4142 1.25 12ZM19.25 12C19.25 11.5858 19.5858 11.25 20 11.25H22C22.4142 11.25 22.75 11.5858 22.75 12C22.75 12.4142 22.4142 12.75 22 12.75H20C19.5858 12.75 19.25 12.4142 19.25 12ZM17.0255 17.0252C17.3184 16.7323 17.7933 16.7323 18.0862 17.0252L20.3082 19.2475C20.6011 19.5404 20.601 20.0153 20.3081 20.3082C20.0152 20.6011 19.5403 20.601 19.2475 20.3081L17.0255 18.0858C16.7326 17.7929 16.7326 17.3181 17.0255 17.0252ZM6.97467 17.0253C7.26756 17.3182 7.26756 17.7931 6.97467 18.086L4.75244 20.3082C4.45955 20.6011 3.98468 20.6011 3.69178 20.3082C3.39889 20.0153 3.39889 19.5404 3.69178 19.2476L5.91401 17.0253C6.2069 16.7324 6.68177 16.7324 6.97467 17.0253ZM12 19.25C12.4142 19.25 12.75 19.5858 12.75 20V22C12.75 22.4142 12.4142 22.75 12 22.75C11.5858 22.75 11.25 22.4142 11.25 22V20C11.25 19.5858 11.5858 19.25 12 19.25Z"
+                        ></path>
+                    </g>
+                </svg>
+            </a>
+        </div>
+    </nav>
+</header>

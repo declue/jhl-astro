@@ -1,0 +1,17 @@
+---
+import {getCollection} from "astro:content";
+import Posts from "../../components/Posts.astro";
+import {getPagination, getSortedPosts} from "../../util";
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const sortedPosts = getSortedPosts(posts);
+
+const paginationProps = {
+    posts: sortedPosts,
+    page: 1,
+    isIndex: true,
+}
+
+const pagination = getPagination(paginationProps);
+---
+
+<Posts {...pagination}/>

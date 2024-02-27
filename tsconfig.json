@@ -1,0 +1,15 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "baseUrl": "src",
+    "jsx": "react"
+  },
+  "exclude": [
+    "*.css",
+    "node_modules",
+    "build",
+    "dist",
+    "public",
+    "src/serviceWorker.ts"]
+}

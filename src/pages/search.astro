@@ -1,0 +1,17 @@
+---
+import Layout from "../components/Layout.astro"
+import { getCollection } from "astro:content";
+import {getSortedPosts} from "../util";
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const sortedPosts = getSortedPosts(posts);
+import SearchBar from "./Search.tsx";
+const searchList = sortedPosts.map(({ data, slug }) => ({
+    title: data.title,
+    description: data.description,
+    data,
+    slug,
+}));
+---
+<Layout>
+    <SearchBar client:load searchList={searchList} />
+</Layout>

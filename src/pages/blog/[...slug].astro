@@ -1,0 +1,52 @@
+---
+import {getCollection} from 'astro:content';
+import Post from "../../components/Post.astro"
+import Posts from "../../components/Posts.astro"
+
+import {getPageNumbers, getPagination, getSortedPosts} from "../../util";
+import {POST_PER_PAGE} from "../../consts";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog", ({data}) => !data.draft);
+    const sortedPosts = getSortedPosts(posts);
+
+    const postResult = sortedPosts.map((post, i) => ({
+        params: {slug: post.slug},
+        props: {
+            post,
+            prevPost: // Previous post
+                i + 1 === POST_PER_PAGE // If the current post is the oldest
+                    ? ""
+                    : sortedPosts[i + 1],
+            nextPost: // Next post
+                i === 0 // If the current post is the newest
+                    ? ""
+                    : sortedPosts[i - 1],
+        },
+    }));
+
+    const pagePaths = getPageNumbers(sortedPosts.length).map(pageNum => ({
+        params: {slug: String(pageNum)},
+    }));
+
+    return [...postResult, ...pagePaths];
+}
+const {slug} = Astro.params;
+const {post, prevPost, nextPost} = Astro.props;
+
+
+const posts = await getCollection("blog", ({data}) => !data.draft);
+
+const sortedPosts = getSortedPosts(posts);
+
+const paginationProp = {
+    posts: sortedPosts,
+    page: slug,
+}
+const pagination = getPagination(paginationProp);
+---
+
+{post ?
+<Post post={post} prevPost={prevPost} nextPost={nextPost}/> :
+<Posts {...pagination}/>}
+

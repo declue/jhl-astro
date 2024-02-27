@@ -1,0 +1,88 @@
+---
+import {marked} from "marked";
+const {body} = Astro.props;
+const headings = extractHeadings(body);
+const toc = buildToc(headings);
+function buildToc(headings : Heading[]) : Heading[] {
+    if (headings === undefined) return [];
+    const toc : Heading[] = [];
+    const parentHeadings: Map<number, Heading> = new Map();
+    headings.forEach((heading) => {
+        parentHeadings.set(heading.depth, heading);
+        if (heading.depth === 1) {
+            toc.push(heading);
+        } else {
+            parentHeadings.get(heading.depth - 1)?.subheadings.push(heading);
+        }
+    });
+    return toc;
+}
+
+
+interface Heading {
+    depth: number;
+    text: string;
+    slug: string;
+    subheadings: Heading[];
+}
+
+function slugify(text: string): string {
+    // 한글 및 영문자, 숫자, 밑줄, 대시를 포함하되, 이들 사이의 공백을 대시로 치환하고 나머지는 제거
+    return text.toLowerCase()
+        .replace(/\s+/g, '-')  // 공백을 대시로 치환
+        .replace(/[^-\w\u0080-\uFFFF]+/g, '');  // URL에 안전한 문자 및 유니코드 문자를 제외한 모든 문자 제거
+
+}
+
+function extractHeadings(markdown: string): Heading[] {
+    const tokens = marked.lexer(markdown);
+    const headings: Heading[] = [];
+    const stack: Heading[] = [];
+
+    tokens.forEach(token => {
+        if (token.type === 'heading') {
+            const heading: Heading = {
+                depth: token.depth,
+                text: token.text,
+                slug: slugify(token.text),
+                subheadings: [],
+            };
+            while (stack.length > 0 && stack[stack.length - 1].depth >= heading.depth) {
+                stack.pop();
+            }
+            if (stack.length > 0) {
+                stack[stack.length - 1].subheadings.push(heading);
+            } else {
+                headings.push(heading);
+            }
+
+            stack.push(heading);
+        }
+    });
+    return headings;
+}
+---
+<nav class="toc">
+    <ul>
+        {toc.map((headingItem) =>
+                <li>
+                    <a href={'#' + headingItem.slug}>
+                        {headingItem.text}
+                    </a>
+                    {
+                        headingItem.subheadings.length > 0 && (
+                            <ul>
+                                {headingItem.subheadings.map((subheading) => (
+                                        <li style={{paddingLeft: "15px"}}>
+                                            > <a href={'#' + subheading.slug}>
+                                            {subheading.text}
+                                        </a>
+                                        </li>
+                                ))}
+                            </ul>
+                        )
+                    }
+                </li>
+        )}
+    </ul>
+</nav>

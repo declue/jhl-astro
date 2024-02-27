@@ -1,0 +1,48 @@
+---
+import {getCollection} from 'astro:content';
+import {getPageNumbers, getSortedPosts} from "../../util";
+import {POST_PER_PAGE} from "../../consts";
+import Layout from "../../components/Layout.astro";
+import Editor from "../Editor";
+import type {CollectionEntry} from 'astro:content';
+
+const {post} = Astro.props as { post: CollectionEntry<'blog'> };
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog", ({data}) => !data.draft);
+    const sortedPosts = getSortedPosts(posts);
+
+    const postResult = sortedPosts.map((post, i) => ({
+        params: {slug: post.slug},
+        props: {
+            post,
+            prevPost: // Previous post
+                i + 1 === POST_PER_PAGE // If the current post is the oldest
+                    ? ""
+                    : sortedPosts[i + 1],
+            nextPost: // Next post
+                i === 0 // If the current post is the newest
+                    ? ""
+                    : sortedPosts[i - 1],
+        },
+    }));
+
+    const pagePaths = getPageNumbers(sortedPosts.length).map(pageNum => ({
+        params: {slug: String(pageNum)},
+    }));
+
+    return [...postResult, ...pagePaths];
+}
+
+---
+
+<Layout>
+    <label> URL : /blog/{post && post.slug }</label>
+    <Editor client:only="react"
+            title={post && post.data.title}
+            series={post && post.data.series}
+            description={post && post.data.description}
+            content={post && post.body}
+            slug={post && post.slug}
+    />
+</Layout>

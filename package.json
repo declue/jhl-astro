@@ -1,0 +1,50 @@
+{
+  "name": "jhl-astro",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.5.5",
+    "@astrojs/mdx": "^2.1.1",
+    "@astrojs/react": "^3.0.10",
+    "@astrojs/rss": "^4.0.5",
+    "@astrojs/sitemap": "^3.1.1",
+    "@types/mermaid": "^9.2.0",
+    "@types/react": "^18.2.60",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/styled-components": "^5.1.34",
+    "@types/unist": "^3.0.2",
+    "@typescript-eslint/parser": "^7.1.0",
+    "@uiw/react-md-editor": "^4.0.4",
+    "astro": "^4.4.4",
+    "astro-eslint-parser": "^0.16.3",
+    "easymde": "^2.18.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-astro": "^0.31.4",
+    "fuse.js": "^7.0.0",
+    "lint-staged": "^15.2.2",
+    "markdown-it": "^14.0.0",
+    "marked": "^12.0.0",
+    "mermaid": "^10.9.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-quill": "^2.0.0",
+    "react-router-dom": "^6.22.3",
+    "react-simplemde-editor": "^5.2.0",
+    "typescript": "^5.3.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,md,mdx,json,astro}": [
+      "prettier --write --plugin=prettier-plugin-astro"
+    ]
+  },
+  "devDependencies": {
+    "@types/marked": "^6.0.0"
+  }
+}

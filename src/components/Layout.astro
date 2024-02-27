@@ -1,0 +1,180 @@
+---
+import Header from "./Header.astro";
+import BaseHead from "./BaseHead.astro";
+import Footer from "./Footer.astro";
+import {BASE_URL} from "../consts";
+import FormattedDate from "./FormattedDate.astro";
+import AdminMenu from "./AdminMenu.astro";
+const {slug} = Astro.params;
+
+const {title, description, pubDate, updatedDate, heroImage, type} = Astro.props;
+const IS_DEV = import.meta.env.VITE_IS_DEV === 'TRUE';
+---
+<html lang="ko" data-theme="light">
+<head>
+    <title/>
+    <BaseHead title={title} description={description}/>
+    <script is:inline>
+
+        window.deletePost = function (slug, title) {
+            if (confirm("Are you sure to delete this post?")) {
+                fetch("http://127.0.0.1:8000/post/", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({title: title, series: "", description: "", content: "", slug: slug}),
+                }).then((res) => {
+                    if(res.ok) {
+                        setInterval(() => {
+                            window.location.href = "/blog";
+                        }, 100);
+                        alert("Post deleted successfully.");
+
+                    }
+                    else {
+                        res.json().then((res) => {
+                            alert(JSON.stringify({slug: slug, title: title}))
+                            alert("Failed to delete post.\n :" + JSON.stringify(res.detail));
+                        });
+                    }
+                });
+            }
+        };
+
+        window.customBack = function (isPopstate = false) {
+            let history = JSON.parse(sessionStorage.getItem("pageHistory")) || [];
+
+            if (history.length > 1) {
+                // 현재 페이지 제거
+                history.pop();
+                // 이전 페이지 URL을 가져오기 위해 한 번 더 제거
+                let previousUrl = history.pop();
+
+                // 세션 스토리지 업데이트
+                sessionStorage.setItem("pageHistory", JSON.stringify(history));
+
+                // 이전 페이지로 이동
+                window.location.href = previousUrl;
+            } else if (history.length === 1 || isPopstate) {
+                // 저장된 이력이 없거나 브라우저의 뒤로가기 버튼이 클릭된 경우
+                window.history.back();
+            }
+            // popstate 이벤트를 통해 호출된 경우 기본 이벤트를 방지
+        };
+
+        window.addEventListener('popstate', function (event) {
+            if (location.hash) {
+                return;
+            }
+            window.customBack(true); // popstate 이벤트에 의해 호출되었음을 표시
+            event.preventDefault();
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // 페이지 로드 시 URL 저장 함수 호출
+            saveCurrentPage();
+        });
+
+        function saveCurrentPage() {
+            let history = JSON.parse(sessionStorage.getItem("pageHistory")) || [];
+            let currentPath = window.location.pathname; // 현재 페이지의 경로 (해시 제외)
+
+            // 현재 페이지가 마지막으로 저장된 페이지와 다른 경우에만 추가
+            if (history.length === 0 || history[history.length - 1] !== currentPath) {
+                history.push(currentPath);
+                sessionStorage.setItem("pageHistory", JSON.stringify(history));
+            }
+        }
+
+
+    </script>
+    <script>
+        let copyButtonLabel = "Copy Code";
+        let codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+        for (let codeBlock of codeBlocks) {
+            let wrapper = document.createElement("div");
+            wrapper.style.position = "relative";
+
+            let copyButton = document.createElement("button");
+            copyButton.className = "copy-code";
+            copyButton.innerHTML = copyButtonLabel;
+
+            codeBlock.setAttribute("tabindex", "0");
+            codeBlock.appendChild(copyButton);
+            codeBlock.parentNode?.insertBefore(wrapper, codeBlock);
+            wrapper.appendChild(codeBlock);
+
+            copyButton.addEventListener("click", async () => {
+                await copyCode(codeBlock, copyButton);
+            });
+        }
+
+        async function copyCode(block : any, button : any) {
+            let code = block.querySelector("code");
+            let text = code.innerText;
+
+            await navigator.clipboard.writeText(text);
+
+            // visual feedback that task is completed
+            button.innerText = "Code Copied";
+
+            setTimeout(() => {
+                button.innerText = copyButtonLabel;
+            }, 700);
+        }
+    </script>
+</head>
+
+<body>
+<Header/>
+<div class="PostLayout">
+    <main>
+        { IS_DEV && <AdminMenu/>}
+        <article>
+            {heroImage &&
+                    <div class="hero-image">
+                        <img width={1020} height={510} src={BASE_URL + heroImage} alt=""/>
+                    </div>
+            }
+            <div class="prose">
+                {title &&
+                        <div class="title">
+                            <h1>{title}</h1>
+                        </div>
+                }
+                <div>
+                    <div class="date">
+                        <FormattedDate date={pubDate}/>
+                        {
+                            updatedDate && (
+                                        <div class="last-updated-on">
+                                            Last updated on
+                                            <FormattedDate date={updatedDate}/>
+                                        </div>
+                            )
+                        }
+                    </div>
+                    { IS_DEV && type == "post" && <div style="text-align: right">
+                        <a href={"/modify/" + slug}>EDIT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href={"javascript:deletePost('" + slug + "','" + title + "')"}>DELETE</a>
+                    </div>}
+                </div>
+                {type === 'post' &&
+                        <hr/>}
+                <slot/>
+            </div>
+        </article>
+
+        {type == "post" &&
+                <div class="back">
+                    <hr/>
+                    <a href="javascript:customBack()">Back</a>
+                </div>
+        }
+    </main>
+</div>
+<Footer/>
+</body>
+</html>

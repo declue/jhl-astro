@@ -1,0 +1,602 @@
+:root[data-theme="dark"] {
+    --default-font-color: #fff;
+    --default-font-color-lite: #aaa;
+    --default-background: #000;
+
+    /* Accent Colors */
+    --accent: #2337ff; /* 기본 악센트 색상을 유지합니다. */
+    --accent-dark: #000d8a; /* 기본 악센트의 어두운 버전을 유지합니다. */
+
+    /* Neutral Colors */
+    --black: 255, 255, 255; /* 밝은 모드의 흰색을 다크 모드의 '검은색'으로 사용합니다. */
+    --white: 15, 18, 25; /* 밝은 모드의 '검은색'을 다크 모드의 흰색으로 사용합니다. */
+    --gray: 159, 159, 159; /* 어두운 모드에서는 더 밝은 회색을 사용합니다. */
+    --gray-light: 34, 41, 57; /* 밝은 모드의 --gray-dark를 다크 모드의 --gray-light로 사용합니다. */
+    --gray-dark: 229, 233, 240; /* 밝은 모드의 --gray-light를 다크 모드의 --gray-dark로 사용합니다. */
+
+    /* Box Shadows */
+    --box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
+    0 16px 32px rgba(var(--gray), 33%);
+
+    --prose-color: #fff;
+    --prose-background: rgb(55, 55, 55, 0.3);
+
+    --post-card-background: #000;
+    --post-card-box: rgba(255, 255, 255, 0.1);
+    --post-card-box-hover: rgba(255, 255, 255, 0.2);
+
+    --post-image-border: #333;
+    --post-title-color: #ccc;
+    --post-date: #999;
+    --post-description: #bbb;
+
+    --search-input-border: #555;
+    --search-input-background: #333;
+    --search-input-color: #ccc;
+    --serach-input-div: #ccc;
+    --search-input-a: #4a86e8;
+
+    --toc-background: rgb(155, 155, 155, 0.2);
+    --toc-border: rgb(77, 77, 77, 0.3);
+    --toc-a: rgb(255, 255, 255, 0.6);
+    --a-button: #ccc;
+
+    --copy-code: black;
+    --copy-code-background: #5757a3;
+    --copy-code-background-hover: #494981;
+    --width: 960px;
+}
+
+:root[data-theme='light'] {
+    --default-font-color: #000;
+    --default-background: rgba(var(--gray-light), 50%), #fff;
+
+    --accent: #2337ff;
+    --accent-dark: #000d8a;
+    --black: 15, 18, 25;
+    --white: 255, 255, 255;
+    --gray: 96, 115, 159;
+    --gray-light: 229, 233, 240;
+    --gray-dark: 34, 41, 57;
+    --box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
+    0 16px 32px rgba(var(--gray), 33%);
+
+    --prose-color: #000;
+    --prose-background: rgb(233, 233, 233, 0.3);
+
+    --post-card-background: #fff;
+    --post-card-box: rgba(0, 0, 0, 0.1);
+    --post-card-box-hover: rgba(0, 0, 0, 0.2);
+
+    --post-image-border: #eee;
+    --post-title-color: #666;
+    --post-date: #666;
+    --post-description: #444;
+
+    --search-input-border: #ccc;
+    --search-input-background: #f9f9f9;
+    --search-input-color: #333333;
+    --serach-input-div: #333333;
+    --search-input-a: #1a0dab;
+
+    --toc-background: rgb(170, 200, 200, 0.1);
+    --toc-border: rgb(204, 204, 204, 0.3);
+    --toc-a: rgb(0, 0, 0, 0.4);
+    --a-button: #333333;
+
+    --copy-code: white;
+    --copy-code-background: #3730a3;
+    --copy-code-background-hover: #312e81;
+    --width: 960px;
+}
+
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    background: var(--default-background);
+    background-size: 100% 600px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: var(--default-font-color);
+    font-size: 14pt;
+    line-height: 1.7;
+}
+
+main {
+    width: 720px;
+    max-width: calc(100% - 2em);
+    margin: auto;
+    padding: 1em 1em;
+}
+
+h1 {
+    margin: 0 0 0.5rem 0;
+    color: var(--default-font-color);
+    line-height: 2;
+    font-size: 2rem;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 0.5rem 0;
+    color: var(--default-font-color);
+    line-height: 1.2;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+}
+
+strong,
+b {
+    font-weight: 700;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent);
+
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+.prose p {
+    margin-bottom: 2em;
+}
+
+textarea {
+    width: 100%;
+    font-size: 1.1rem;
+}
+
+input {
+    font-size: 1.1rem;
+}
+
+table {
+    width: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+code {
+    padding: 2px 5px;
+    background-color: rgb(var(--gray-light));
+    border-radius: 2px;
+}
+
+pre {
+    padding: 1.5em;
+    border-radius: 8px;
+}
+
+pre > code {
+    all: unset;
+}
+
+blockquote {
+    border-left: 4px solid var(--accent);
+    padding: 0 0 0 20px;
+    margin: 0;
+    font-size: 1.333rem;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid rgb(var(--gray-light));
+}
+
+@media (max-width: 720px) {
+    body {
+        font-size: 1rem;
+    }
+
+    main {
+        padding: 1em;
+    }
+}
+
+.sr-only {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+    clip: rect(1px 1px 1px 1px);
+    /* maybe deprecated but we need to support legacy browsers */
+    clip: rect(1px, 1px, 1px, 1px);
+    /* modern browsers, clip-path works inwards from each corner */
+    clip-path: inset(50%);
+    /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
+    white-space: nowrap;
+}
+
+.copy-code {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--copy-code-background);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: var(--copy-code);
+}
+
+.copy-code:hover {
+    background-color: var(--copy-code-background-hover);
+}
+
+header {
+    margin: 0;
+    padding: 0 1em;
+    box-shadow: 0 2px 8px rgba(var(--black), 5%);
+
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    nav a {
+        padding: 1em 0.5em;
+        color: var(--default-font-color);
+        border-bottom: 4px solid transparent;
+        text-decoration: none;
+    }
+
+    nav a.active {
+        text-decoration: none;
+        border-bottom-color: var(--accent);
+    }
+
+    .Icons {
+        display: flex;
+        color: var(--default-font-color);
+    }
+
+    .social-links,
+    .social-links a {
+        display: flex;
+    }
+
+    @media (max-width: 720px) {
+        .social-links {
+            display: none;
+        }
+    }
+}
+
+
+footer {
+    padding: 2em 1em 6em 1em;
+    background: linear-gradient(var(--default-background)) no-repeat;
+    color: rgb(var(--gray));
+    text-align: center;
+
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1em;
+        margin-top: 1em;
+    }
+
+    .social-links a {
+        text-decoration: none;
+        color: rgb(var(--gray));
+    }
+
+    .social-links a:hover {
+        color: rgb(var(--gray-dark));
+    }
+}
+
+
+.header-link {
+    a {
+        font-size: 1.2rem;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    a.active {
+        font-weight: bolder;
+        text-decoration: none;
+    }
+}
+
+
+.PostLayout {
+    main {
+        width: calc(100% - 2em);
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .hero-image {
+        width: 100%;
+    }
+
+
+    .hero-image img {
+        display: block;
+        margin: 0 auto;
+        border-radius: 12px;
+        box-shadow: var(--box-shadow);
+    }
+
+    .prose {
+        width: var(--width);
+        max-width: calc(100% - 2em);
+        margin: auto;
+        padding: 2em;
+        color: var(--prose-color);
+        background: var(--prose-background);
+    }
+
+    .title {
+        margin-bottom: 1em;
+        padding: 1em 0;
+        text-align: center;
+        line-height: 1;
+    }
+
+    .title h1 {
+        margin: 0 0 0.5em 0;
+    }
+
+    .date {
+        margin-bottom: 0.5em;
+        color: rgb(var(--gray));
+        text-align: right;
+    }
+
+    .last-updated-on {
+        font-style: italic;
+    }
+
+    .back {
+        margin-bottom: 1em;
+        text-align: center;
+        font-size: 1.5rem;
+
+
+        a {
+            border: 1px solid var(--default-font-color);
+            border-radius: 8%;
+            padding: 5px 25px;
+            color: var(--default-font-color);
+            background: var(--default-background);
+        }
+
+        a:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px var(--post-card-box-hover);
+        }
+    }
+
+    .prevNext {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1em;
+        padding: 1em 0;
+        border-top: 1px solid rgb(var(--gray));
+        border-bottom: 1px solid rgb(var(--gray));
+        text-align: center;
+    }
+
+    .prevPost, .nextPost {
+        flex: 1;
+        text-align: center;
+
+        a {
+            color: var(--a-button);
+        }
+    }
+}
+
+
+.post-card {
+    padding-top: 20px;
+    margin: 5px;
+    background: var(--post-card-background);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px var(--post-card-box);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    list-style-type: none;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px var(--post-card-box-hover);
+}
+
+.PostsLayout {
+
+    .posts-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        list-style-type: none;
+        padding: 0;
+    }
+
+
+    .post-image {
+        width: 100%;
+        height: auto;
+        border-bottom: 1px solid var(--post-image-border);
+    }
+
+    .post-content {
+        padding: 1rem;
+    }
+
+    .post-title {
+        margin: 0.5rem 0;
+        font-size: 1.25rem;
+        color: var(--post-title-color);
+    }
+
+    .post-date {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--post-date);
+    }
+
+    .post-description {
+        font-size: 1rem;
+        color: var(--post-description);
+    }
+
+    @media (max-width: 720px) {
+        .posts-list {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+.search {
+    label {
+        position: relative;
+        display: block;
+    }
+
+    span.search-icon {
+        position: absolute;
+        inset: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        padding-left: 8px;
+        opacity: 0.75;
+    }
+
+    svg {
+        height: 24px;
+        width: 24px;
+    }
+
+    input {
+        width: 90%;
+        border-radius: 8px;
+        border: 1px solid var(--search-input-border);
+        background-color: var(--search-input-background);
+        padding: 12px 20px 12px 40px;
+        margin-right: 8px;
+        margin-bottom: 8px;
+        color: var(--search-input-color);
+    }
+
+    div {
+        margin-top: 32px;
+        color: var(--serach-input-div);
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0
+    }
+
+    li {
+        margin-bottom: 10px
+    }
+
+    a {
+        color: var(--search-input-a);
+        text-decoration: none
+    }
+}
+
+.toc {
+    font-size: 0.9rem;
+    position: fixed;
+    top: 120px;
+    left: calc((100% - 960px) / 2 + 960px + 50px);;
+    width: 200px;
+    height: auto;
+    overflow: auto;
+    background-color: var(--toc-background);
+    border: 1px solid var(--toc-border);
+    text-align: left;
+    padding: 0;
+
+    ul {
+        list-style: none;
+        padding-left: 5px;
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--toc-a);
+        padding: 3px;
+    }
+}
+
+.Series {
+    border: 0 solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+
+    .box {
+        box-shadow: 0 2px 4px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%);
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 5px;
+
+        .title {
+            margin-right: 5px;
+        }
+
+        .current {
+            font-weight: bold;
+            color: #007bff;
+            padding-left: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--default-font-color);
+            transition: color 0.3s ease;
+        }
+
+        .pubDate {
+            margin-left: 20px;
+            color: #777;
+        }
+    }
+}
+

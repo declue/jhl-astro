@@ -1,0 +1,57 @@
+---
+import {type CollectionEntry} from "astro:content";
+import Layout from "../components/Layout.astro"
+import {getCollection} from "astro:content";
+import {formatPubDate} from "./datetime";
+import {getSeriesMap} from "../util";
+import {getSortedPosts} from "../util";
+
+const posts = await getCollection("blog", ({data}) => !data.draft);
+const sortedPosts = getSortedPosts(posts);
+const latestPosts : (CollectionEntry<'blog'> | null )[] = sortedPosts.slice(0, 10);
+for (let i = latestPosts.length; i < 10; i++) {
+    latestPosts.push(null);
+}
+const projectPosts = await getCollection("blog", ({data}) => !data.draft && data.series == "Project");
+const seriesMap = getSeriesMap(posts)
+---
+
+<Layout>
+    <div style="display:flex">
+        <div style="width:50%; height:50vh;">
+            최근 글
+            <div>
+                <ul style="list-style-type: none; padding-left: 15px; margin:0">
+                    {latestPosts.map((post) => (
+                            post != null ?
+                            <li>
+                                <a href={"/blog/" + post.slug}
+                                   style="color: var(--default-font-color)"
+                                >{post.data.title}
+                                    <label style='color: gray; margin-left: 10px'>{formatPubDate(post.data.pubDate.toDateString())}</label></a>
+                            </li> :
+                                <li></li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+        <div style="width:50%">
+            <div style="height: 50%">
+                주요 Series의 최신 글
+                <ul>
+                    {Array.from(seriesMap)
+                        .sort((a, b) => b[1].length - a[1].length)
+                        .slice(0, 5)
+                        .map(([series, posts]) => (
+                            <li>
+                                <a href={"/blog/" + posts[0].slug} style="color: var(--default-font-color)">
+                                    <label style="color: var(--default-font-color-lite); font-weight: bold;">[{series}]</label> {posts[0].data.title}</a>
+                            </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div style="display:flex">
+    </div>
+</Layout>

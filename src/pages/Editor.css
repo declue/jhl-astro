@@ -1,0 +1,45 @@
+.editor {
+    height: 600px;
+    width:100%;
+}
+
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 각 요소 사이의 간격 */
+    margin: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 20px;
+}
+
+.input-group input,
+.input-group textarea {
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    border: 1px solid #ccc; /* 경계선 스타일 */
+    font-size: 16px; /* 폰트 사이즈 */
+}
+
+.input-group textarea {
+    resize: vertical; /* 세로 방향으로만 크기 조정 가능 */
+}
+
+.save-button {
+    padding: 10px 20px;
+    background-color: #007bff; /* 배경 색상 */
+    color: white; /* 텍스트 색상 */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer; /* 마우스 오버 시 커서 변경 */
+    font-size: 16px;
+}
+
+.save-button:hover {
+    background-color: #0056b3; /* 호버 시 배경 색상 변경 */
+}

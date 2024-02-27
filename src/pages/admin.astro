@@ -1,0 +1,23 @@
+---
+import Layout from '../components/Layout.astro';
+
+const IS_DEV = import.meta.env.VITE_IS_DEV === 'TRUE';
+---
+
+
+{ !IS_DEV &&
+<Layout title="지원하지 않는 페이지">
+    <div style="text-align: center">
+    </div>
+</Layout>
+    }
+
+
+{ IS_DEV &&
+<Layout title="관리자 페이지">
+    <div style="text-align: center">
+        <img src="/timo.png"/>
+    </div>
+</Layout>
+    }
+

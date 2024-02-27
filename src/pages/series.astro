@@ -1,0 +1,29 @@
+---
+import Layout from "../components/Layout.astro"
+import {BASE_URL} from '../consts';
+import {getCollection} from 'astro:content';
+const posts = await getCollection("blog", ({data}) => !data.draft);
+import {getSeriesMap} from "../util";
+import {formatPubDate} from "./datetime";
+
+const series_map = getSeriesMap(posts)
+
+---
+<Layout>
+        {Array.from(series_map).map(([series, slugs]) => (
+            <div class="Series">
+                <h2>📚 {series}</h2>
+                <ul>
+                    {slugs.map(item  => (
+                            <li>
+                                <span class="title" role="img" aria-label="북마크">🔖</span>
+                                <a href={BASE_URL + "/blog/" + item.slug}>{item.data.title}</a>
+                                <span class="pubDate">{formatPubDate(item.data.pubDate.toDateString())}</span>
+                            </li>
+                    ))}
+                </ul>
+            </div>
+
+
+    ))}
+</Layout>

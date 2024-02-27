@@ -1,0 +1,35 @@
+---
+import {BASE_URL} from "../consts";
+import {getCollection} from "astro:content";
+import {getSeriesMap} from "../util";
+const posts = await getCollection("blog", ({data}) => !data.draft);
+const series_map = getSeriesMap(posts)
+const {post} = Astro.props;
+const {slug} = Astro.params;
+const series_posts = series_map.get(post.data.series);
+---
+<div  style={{marginBottom: '20px'}}>
+    {post.data.series &&  series_map && series_map.has(post.data.series) && (
+            <div class="Series">
+                {post.data.series  && series_map.has(post.data.series) && (
+                        <div class="box">
+                            <h2>
+                                📚 {post.data.series}</h2>
+                            <ul>
+                                {series_posts && series_posts.map(item => (
+                                        <li>
+                                            {slug === item.slug ? (
+                                                    <span class="current">👉 {item.data.title} </span>
+                                            ) : (
+                                                    <a style={{
+                                                        paddingLeft: '40px',
+                                                    }} href={BASE_URL + "/blog/" + item.slug}> {item.data.title}</a>
+                                            )}
+                                        </li>
+                                ))}
+                            </ul>
+                        </div>
+                )}
+            </div>
+    )}
+</div>
