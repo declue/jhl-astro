@@ -4,6 +4,11 @@ import {BASE_URL, SITE_TITLE, GITHUB_LINK} from '../consts';
 
 const IS_DEV = import.meta.env.VITE_IS_DEV === 'TRUE';
 ---
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+</script>
+
 <script>
 
     // 테마를 초기화하고 이전에 저장된 테마가 있다면 적용하는 함수

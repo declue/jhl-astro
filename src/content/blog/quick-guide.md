@@ -20,7 +20,7 @@ series: "astro"
 ```markdown
 ![Alt text](./full/or/relative/path/of/image)
 ```
-![blog placeholder](/blog-placeholder-about.jpg)
+![blog placeholder](/jhl-astro/blog-placeholder-about.jpg)
 
 <br/><hr/>
 

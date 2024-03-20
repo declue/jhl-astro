@@ -38,6 +38,16 @@ series: 'jhl-astro'
 
 # series 기능 지원
 >Post에서는
-> ![img.png](series2.png)
+
+![img.png](series2.png)
+
 >Series 페이지에서
-> ![img.png](series.png)
+
+![img.png](series.png)
+
+# gist 변환 기능 제공
+![img.png](gist.png)
+
+# mermaid 변환 기능 제공
+
+![img.png](mermaid.png)

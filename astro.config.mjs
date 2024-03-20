@@ -4,11 +4,11 @@ import react from "@astrojs/react";
 import sitemap from '@astrojs/sitemap';
 import {remarkGist} from "./src/remark/gist";
 import {remarkMermaid} from "./src/remark/mermaid";
-
+import {BASE_URL} from "./src/consts.ts";
 // https://astro.build/config
 export default defineConfig({
     site: 'https://jhl-astro.github.io',
-//	base: '/myblog',
+	base: BASE_URL,
     markdown: {
         remarkPlugins: [
             remarkGist,

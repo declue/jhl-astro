@@ -1,5 +1,6 @@
 ---
 import Layout from '../components/Layout.astro';
+import {BASE_URL} from "../consts";
 
 const IS_DEV = import.meta.env.VITE_IS_DEV === 'TRUE';
 ---
@@ -16,7 +17,7 @@ const IS_DEV = import.meta.env.VITE_IS_DEV === 'TRUE';
 { IS_DEV &&
 <Layout title="관리자 페이지">
     <div style="text-align: center">
-        <img src="/timo.png"/>
+        <img src={BASE_URL + "/timo.png"} alt=""/>
     </div>
 </Layout>
     }

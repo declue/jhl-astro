@@ -8,4 +8,4 @@ export const GITHUB_LINK = "https://github.com/declue/jhl-astro"
 export const POST_PER_PAGE = 8;
 export const SCHEDULES_POST_MARGIN = 15 * 60 * 1000;
 
-export const BASE_URL = "";
+export const BASE_URL = "/jhl-astro"

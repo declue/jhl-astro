@@ -1,11 +1,12 @@
 ---
 import Layout from '../components/Layout.astro';
+import {BASE_URL} from "../consts";
 ---
 
 <Layout
         title="About Me"
 >
     <div style="text-align: center">
-    <img src="/timo.png" alt="Timo" class="rounded-full h-24 w-24 mx-auto" />
+    <img src={BASE_URL + "/timo.png"} alt="Timo" class="rounded-full h-24 w-24 mx-auto" />
     </div>
 </Layout>
